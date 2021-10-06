@@ -1,3 +1,4 @@
+import PIL
 name = 'example.txt'
 f = open(name,'r')
 code = f.read().split('\n')
