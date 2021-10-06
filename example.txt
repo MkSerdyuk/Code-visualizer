@@ -6,6 +6,7 @@ i:integer;
 
 
 Begin
+begin
   writeln;
   pi:=@i;
   i:=100;
@@ -18,4 +19,5 @@ Begin
   pi2:=pi;
   dispose(pi);
   writeln;
+end;
 end.
