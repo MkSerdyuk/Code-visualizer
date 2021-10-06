@@ -8,7 +8,7 @@ edited_code = ['']
 for i in range(0,len(code)):
     if (code[i].lower()== "end" or code[i].lower()=="end."):
         edited_code.append("@|")
-        pointers.append(str(i))
+        pointers.append(str(len(code)-int(i)+1))
     elif (code[i].lower() == "begin"):
         edited_code.append("@"+pointers[len(pointers)-1])
         del pointers[len(pointers)-1]
@@ -32,10 +32,12 @@ for i in range(1,height,interv):
                 pointer=0
                 for j in range(len(cur_str)-1):
                     pointer=pointer*10+int(cur_str[j+1])
-                text_print.line((2,i,2,i+pointer*interv),fill='red',width=2)
+                text_print.line((2,i,2,i+(pointer-k-1)*interv),fill='red',width=2)
+                text_print.text((10,i),"BEGIN",(0,0,0))
+            elif cur_str[1]=="|":
+                text_print.text((10,i),"END",(0,0,0))
     k+=1
 space.show()
-
         
     
         
