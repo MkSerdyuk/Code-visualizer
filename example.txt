@@ -1,0 +1,21 @@
+type 
+Pinteger=^integer;
+var
+pi,pi2:pinteger;
+i:integer;
+
+
+Begin
+  writeln;
+  pi:=@i;
+  i:=100;
+  writeln;
+  pi^:=33;
+  writeln;
+  new(pi);
+  pi^:=50;
+  writeln;
+  pi2:=pi;
+  dispose(pi);
+  writeln;
+end.
