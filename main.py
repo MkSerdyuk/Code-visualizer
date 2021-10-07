@@ -6,7 +6,7 @@ code.reverse()
 pointers = ['']
 edited_code = ['']
 for i in range(0,len(code)):
-    if ("end;" in code[i].lower() or "end." in code[i].lower()):
+    if ("end" in code[i].lower()):
         edited_code.append("@|")
         pointers.append(str(len(code)-int(i)+1))
     elif ("begin" in code[i].lower()):
