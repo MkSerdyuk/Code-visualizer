@@ -5,8 +5,12 @@ from tkinter import ttk
 from PIL import ImageTk
 
 start = False
-def scroll(images):
-    
+'''
+def scroll(images,i):
+    if i==(-1):
+
+    if i==(1):
+'''  
 def start_main():
     file_name = filedialog.askopenfilename()
     #if start == True:
@@ -34,6 +38,8 @@ def start_main():
             edited_code[i] = ("@"+pointers[len(pointers)-1])
             del pointers[len(pointers)-1]
     edited_code.reverse()
+    for i in range(0,len(code)):
+        print(edited_code[i])
     #____________________________
     weidth = 620
     height = 877
@@ -53,13 +59,15 @@ def start_main():
                         pointer=0
                         for j in range(len(cur_str)-1):
                             pointer=pointer*10+int(cur_str[j+1])
-                        text_print.line((2+tabneed*5,i,2+tabneed*5,i+(pointer-k-1)*interv),fill='red',width=2)
+                        text_print.line((2+tabneed*5,i,2+tabneed*5,i+(pointer-k-1)*interv-interv//3),fill='red',width=2)
                         text_print.text((10+tabneed*5,i),"BEGIN",(0,0,0))
                         tabneed+=1
                     elif cur_str[1]=="|":
                         text_print.text((10+tabneed*5,i),"END",(0,0,0))
+                        tabneed -=1
                 elif cur_str[0]=="%":
                     cur_str_1 = ''
+                    #tabneed+=1
                     for j in range(1,len(cur_str)):
                         cur_str_1+=cur_str[j]
                     text_print.text((10+tabneed*5,i),cur_str_1,(0,0,0))
@@ -69,9 +77,9 @@ def start_main():
     img = space
 #    result_img = tk.Label(tab2, image = ImageTk.PhotoImage(img))
 #    result_img.place(relx=.5, rely=.5, anchor="c")
-    canvas = tk.Canvas(window, width=weidth, height=height)
+    canvas = tk.Canvas(tab2, width=weidth, height=height)
     canvas.place(relx=.45,rely=.3, anchor="c")
-    img=ImageTk.PhotoImage(Image.open('test.png'))
+    img=ImageTk.PhotoImage(img)
     def createImg(x, y):
         canvas.create_image(x, y, image=img)
     createImg(500,700)     
