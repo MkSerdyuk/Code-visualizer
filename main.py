@@ -17,7 +17,7 @@ def start_main():
     code = f.read().split('\n')
     edited_code = ['']
     for i in range (0, len(code)):
-        if (("else" in code[i].lower() or "if" in code[i].lower() or "for" in code[i].lower() or "while" in code[i].lower()) and not("begin" in code[i+1].lower())):
+        if (("procedure" in code[i].lower() or "function" in code[i].lower() or "else" in code[i].lower() or "if" in code[i].lower() or "for" in code[i].lower() or "while" in code[i].lower()) and not("begin" in code[i+1].lower())):
             edited_code.append("%"+code[i])
         else:
             edited_code.append(code[i])
@@ -60,21 +60,28 @@ def start_main():
                     cur_str_1 = ''
                     for j in range(1,len(cur_str)):
                         cur_str_1+=cur_str[j]
-                    print(cur_str_1)
-                    print(cur_str)
                     text_print.text((10+tabneed*5,i),cur_str_1,(0,0,0))
                     text_print.line((2+tabneed*5,i,2+tabneed*5,i+2*interv),fill='red',width=2)
         k+=1  
 #____
     img = space
-    result_img = tk.Label(tab2, image = ImageTk.PhotoImage(img))
-    result_img.place(relx=.5, rely=.5, anchor="c")
+#    result_img = tk.Label(tab2, image = ImageTk.PhotoImage(img))
+#    result_img.place(relx=.5, rely=.5, anchor="c")
+    canvas = tk.Canvas(window, width=weidth, height=height)
+    canvas.place(relx=.45,rely=.3, anchor="c")
+    img=ImageTk.PhotoImage(Image.open('test.png'))
+    def createImg(x, y):
+        canvas.create_image(x, y, image=img)
+    createImg(500,700)     
     save_button = tk.Button(tab2, text = "Сохранить", width = 25, height = 2, bg ='grey',fg = 'black')
     save_button.place(relx=.5,rely=0.9,anchor="n")
     save_button.config(command=lambda:save_image(img))
 def save_image(img):
-    file_name = filedialog.asksaveasfilename(filetypes=(("Image File (PNG)", "*.png"),("Image File (JPEG)", "*.jpeg")))
-    img.save(file_name)
+    file_name = filedialog.asksaveasfilename(filetypes=[("Image File (PNG)", "*.png"),("Image File (JPEG)", "*.jpeg")],title=("Сохранить как..."))
+    try:
+        img.save(file_name)
+    except ValueError:
+        img.save(file_name+'.png')
 window = tk.Tk()
 tab_control = ttk.Notebook(window)
 tab1 = ttk.Frame(tab_control)
