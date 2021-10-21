@@ -109,17 +109,12 @@ def start_main():
         '''
 #__________________________________________
     img = space
-#    result_img = tk.Label(tab2, image = ImageTk.PhotoImage(img))
-#    result_img.place(relx=.5, rely=.5, anchor="c")
-    canvas = tk.Canvas(tab2, width=weidth, height=height)
-    canvas.place(relx=.45,rely=.3, anchor="c")
-    img_1=ImageTk.PhotoImage(img)
-    def createImg(x, y):
-        canvas.create_image(x, y, image=img_1)
-    createImg(500,400)     
     save_button = tk.Button(tab2, text = "Сохранить", width = 25, height = 2, bg ='grey',fg = 'black')
     save_button.place(relx=.5,rely=0.9,anchor="n")
     save_button.config(command=lambda:save_image(img))
+    img_1=ImageTk.PhotoImage(img)
+    code_img = tk.Label(tab2, image = img_1).place(relx=0.5,rely=0.5,anchor='c')
+    window.mainloop()
 
 def save_image(img):
     file_name = filedialog.asksaveasfilename(filetypes=[("Image File (PNG)", "*.png"),("Image File (JPEG)", "*.jpeg")],title=("Сохранить как..."))
