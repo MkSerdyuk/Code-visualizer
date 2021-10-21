@@ -4,25 +4,32 @@ from tkinter import filedialog
 from tkinter import ttk
 from PIL import ImageTk
 
-'''
-def scroll(images,i):
-    if i==(-1):
-
-    if i==(1):
-'''  
+i=0
 def start_main():
-    file_name = filedialog.askopenfilename()
-    #if start == True:
-     #   result_img.destroy()
-    #else:
-     #   start = True
-#_______        
+    global i
+    def module(text_print,interv,weidth,code,n,tab):
+        global i
+        if code[n][len(code[n])-1]!=';':
+            if code[n+1][0]=='%':
+                text_print.text((10+tab*5,n*interv),code[n],(0,0,0))
+                #module(text_print,interv,weidth,code,n+1,tab+1)
+            elif code[n+1][0]=='@':
+                pointer=0
+                for j in range(len(code[n+1])-1):
+                    pointer=pointer*10+int(code[n+1][j+1])
+                i+=pointer
+                text_print.rectangle((2+tab*5,n*interv,weidth-2-tab*5,(pointer-1)*interv),width=2,outline=(256,0,0))
+                text_print.text((10+tab*5,n*interv),code[n],(0,0,0))
+        else:
+            text_print.rectangle((2+tab*5,n*interv,weidth-2-tab*5,n+1*interv),width=2,outline=(256,0,0))
+            text_print.text((10+tab*5,n*interv),code[n],(0,0,0))
+    file_name = filedialog.askopenfilename()      
     name = file_name
     f = open(name,'r')
     code = f.read().split('\n')
     edited_code = ['']
     for i in range (0, len(code)):
-        if (("procedure" in code[i].lower() or "function" in code[i].lower() or "else" in code[i].lower() or "if" in code[i].lower() or "for" in code[i].lower() or "while" in code[i].lower()) and not("begin" in code[i+1].lower())):
+        if (("procedure" in code[i].lower() or "function" in code[i].lower() or "else" in code[i].lower() or "if" in code[i].lower() or "for" in code[i].lower() or "while" in code[i].lower())):
             edited_code.append("%"+code[i])
         else:
             edited_code.append(code[i])
@@ -47,6 +54,20 @@ def start_main():
     text_print = ImageDraw.Draw(space)
     k=0
     tabneed=0
+    i = 0
+    while i+1 <= len(edited_code):
+        if len(edited_code[i])>0:
+            if(edited_code[i][0]=='%'):
+                module(text_print,interv,weidth,edited_code,i,1)
+            else:
+                if edited_code[i][0]!='@':
+                    text_print.text((10,i*interv),edited_code[i],(0,0,0))
+                elif edited_code[i][1]=="|":
+                    text_print.text((10,i*interv),'END',(0,0,0))
+                else:
+                    text_print.text((10,i*interv),'BEGIN',(0,0,0))
+        i+=1 
+    '''
     for i in range(1,height,interv): 
         if k<len(edited_code):
             cur_str=str(edited_code[k])
@@ -71,7 +92,8 @@ def start_main():
                         cur_str_1+=cur_str[j]
                     text_print.text((10+tabneed*5,i),cur_str_1,(0,0,0))
                     text_print.line((2+tabneed*5,i,2+tabneed*5,i+2*interv),fill='red',width=2)
-        k+=1  
+        k+=1
+        '''
 #____
     img = space
 #    result_img = tk.Label(tab2, image = ImageTk.PhotoImage(img))
@@ -85,12 +107,14 @@ def start_main():
     save_button = tk.Button(tab2, text = "Сохранить", width = 25, height = 2, bg ='grey',fg = 'black')
     save_button.place(relx=.5,rely=0.9,anchor="n")
     save_button.config(command=lambda:save_image(img))
+
 def save_image(img):
     file_name = filedialog.asksaveasfilename(filetypes=[("Image File (PNG)", "*.png"),("Image File (JPEG)", "*.jpeg")],title=("Сохранить как..."))
     try:
         img.save(file_name)
     except ValueError:
         img.save(file_name+'.png')
+
 window = tk.Tk()
 tab_control = ttk.Notebook(window)
 tab1 = ttk.Frame(tab_control)
