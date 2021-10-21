@@ -12,15 +12,12 @@ def start_main():
         text_print.text((10+tab*5,n*interv),code[n][1:],(0,0,0))
         if code[n][len(code[n])-1]!=';':
             if code[n+1][0]=='%':
-                module(text_print,interv,weidth,code,n+1,tab+1)
+                print('')
+                #i=rmodule(text_print,interv,weidth,code,n+1,tab+1)
             elif code[n+1][0]=='@':
                 pointer=0
                 for j in range(1,len(code[n+1])):
                     pointer=pointer*10+int(code[n+1][j])
-                '''    
-                for k in range(n+1,pointer):
-                    text_print.text((10+tab*5,(k)*interv),code[k],(0,0,0))
-                '''
                 i+=1
                 while i!=pointer:
                     if len(edited_code[i])>0:
@@ -38,6 +35,9 @@ def start_main():
         else:
             text_print.rectangle((2+tab*5,n*interv,weidth-2-tab*5,n+1*interv),width=2,outline=(256,0,0))
             text_print.text((10+tab*5,n*interv),code[n],(0,0,0))
+#_______________________________________________________-            
+      
+#_________________________________________________            
     file_name = filedialog.askopenfilename()      
     name = file_name
     f = open(name,'r')
@@ -60,9 +60,9 @@ def start_main():
             del pointers[len(pointers)-1]
     edited_code.reverse()
     #____________________________
-    weidth = 620
-    height = 877
     interv = 15
+    weidth = 620
+    height = interv*len(edited_code)
     space = Image.new("RGB", (weidth,height),(256,256,256))
     text_print = ImageDraw.Draw(space)
     k=0
@@ -107,16 +107,16 @@ def start_main():
                     text_print.line((2+tabneed*5,i,2+tabneed*5,i+2*interv),fill='red',width=2)
         k+=1
         '''
-#____
+#__________________________________________
     img = space
 #    result_img = tk.Label(tab2, image = ImageTk.PhotoImage(img))
 #    result_img.place(relx=.5, rely=.5, anchor="c")
     canvas = tk.Canvas(tab2, width=weidth, height=height)
     canvas.place(relx=.45,rely=.3, anchor="c")
-    img=ImageTk.PhotoImage(img)
+    img_1=ImageTk.PhotoImage(img)
     def createImg(x, y):
-        canvas.create_image(x, y, image=img)
-    createImg(500,700)     
+        canvas.create_image(x, y, image=img_1)
+    createImg(500,400)     
     save_button = tk.Button(tab2, text = "Сохранить", width = 25, height = 2, bg ='grey',fg = 'black')
     save_button.place(relx=.5,rely=0.9,anchor="n")
     save_button.config(command=lambda:save_image(img))
