@@ -12,17 +12,19 @@ def start_main():
         text_print.text((10+tab*5,n*interv),code[n][1:],(0,0,0))
         if code[n][len(code[n])-1]!=';':
             if code[n+1][0]=='%':
-                print('')
-                #i=rmodule(text_print,interv,weidth,code,n+1,tab+1)
+                a=(module(text_print,interv,weidth,code,n+1,tab+1))
+                return(a)
+                text_print.rectangle((2+tab*5,n*interv,weidth-2-tab*5,a*interv),width=2,outline=(256,0,0))
             elif code[n+1][0]=='@':
                 pointer=0
                 for j in range(1,len(code[n+1])):
                     pointer=pointer*10+int(code[n+1][j])
                 i+=1
+                text_print.rectangle((2+tab*5,n*interv,weidth-2-tab*5,(pointer-1)*interv),width=2,outline=(256,0,0))
                 while i!=pointer:
                     if len(edited_code[i])>0:
                         if(edited_code[i][0]=='%'):
-                            module(text_print,interv,weidth,edited_code,i,1)
+                            i=(module(text_print,interv,weidth,edited_code,i,tab+1))
                         else:
                             if edited_code[i][0]!='@':
                                 text_print.text((10,i*interv),edited_code[i],(0,0,0))
@@ -30,11 +32,14 @@ def start_main():
                                 text_print.text((10,i*interv),'END',(0,0,0))
                             else:
                                 text_print.text((10,i*interv),'BEGIN',(0,0,0))
-                    i+=1 
-                text_print.rectangle((2+tab*5,n*interv,weidth-2-tab*5,(pointer-1)*interv),width=2,outline=(256,0,0))
+                    i+=1
+                return(pointer)
+            else:
+                text_print.rectangle((2+tab*5,n*interv,weidth-2-tab*5,(n+2)*interv),width=2,outline=(256,0,0))
+                text_print.text((10+tab*5,(n+1)*interv),code[n+1],(0,0,0))
+                return(n+1)
         else:
-            text_print.rectangle((2+tab*5,n*interv,weidth-2-tab*5,n+1*interv),width=2,outline=(256,0,0))
-            text_print.text((10+tab*5,n*interv),code[n],(0,0,0))
+            text_print.rectangle((2+tab*5,n*interv,weidth-2-tab*5,n*interv),width=2,outline=(256,0,0))
 #_______________________________________________________-            
       
 #_________________________________________________            
@@ -71,7 +76,7 @@ def start_main():
     while i+1 <= len(edited_code):
         if len(edited_code[i])>0:
             if(edited_code[i][0]=='%'):
-                module(text_print,interv,weidth,edited_code,i,1)
+                i=(module(text_print,interv,weidth,edited_code,i,1))
             else:
                 if edited_code[i][0]!='@':
                     text_print.text((10,i*interv),edited_code[i],(0,0,0))
