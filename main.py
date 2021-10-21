@@ -9,17 +9,32 @@ def start_main():
     global i
     def module(text_print,interv,weidth,code,n,tab):
         global i
+        text_print.text((10+tab*5,n*interv),code[n][1:],(0,0,0))
         if code[n][len(code[n])-1]!=';':
             if code[n+1][0]=='%':
-                text_print.text((10+tab*5,n*interv),code[n],(0,0,0))
-                #module(text_print,interv,weidth,code,n+1,tab+1)
+                module(text_print,interv,weidth,code,n+1,tab+1)
             elif code[n+1][0]=='@':
                 pointer=0
-                for j in range(len(code[n+1])-1):
-                    pointer=pointer*10+int(code[n+1][j+1])
-                i+=pointer
+                for j in range(1,len(code[n+1])):
+                    pointer=pointer*10+int(code[n+1][j])
+                '''    
+                for k in range(n+1,pointer):
+                    text_print.text((10+tab*5,(k)*interv),code[k],(0,0,0))
+                '''
+                i+=1
+                while i!=pointer:
+                    if len(edited_code[i])>0:
+                        if(edited_code[i][0]=='%'):
+                            module(text_print,interv,weidth,edited_code,i,1)
+                        else:
+                            if edited_code[i][0]!='@':
+                                text_print.text((10,i*interv),edited_code[i],(0,0,0))
+                            elif edited_code[i][1]=="|":
+                                text_print.text((10,i*interv),'END',(0,0,0))
+                            else:
+                                text_print.text((10,i*interv),'BEGIN',(0,0,0))
+                    i+=1 
                 text_print.rectangle((2+tab*5,n*interv,weidth-2-tab*5,(pointer-1)*interv),width=2,outline=(256,0,0))
-                text_print.text((10+tab*5,n*interv),code[n],(0,0,0))
         else:
             text_print.rectangle((2+tab*5,n*interv,weidth-2-tab*5,n+1*interv),width=2,outline=(256,0,0))
             text_print.text((10+tab*5,n*interv),code[n],(0,0,0))
@@ -44,8 +59,6 @@ def start_main():
             edited_code[i] = ("@"+pointers[len(pointers)-1])
             del pointers[len(pointers)-1]
     edited_code.reverse()
-    for i in range(0,len(code)):
-        print(edited_code[i])
     #____________________________
     weidth = 620
     height = 877
