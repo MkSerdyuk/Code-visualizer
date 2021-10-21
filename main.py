@@ -13,14 +13,15 @@ def start_main():
         if code[n][len(code[n])-1]!=';':
             if code[n+1][0]=='%':
                 a=(module(text_print,interv,weidth,code,n+1,tab+1))
+                print(n*interv,',',a*interv)
+                text_print.rectangle((2+tab*5,n*interv,weidth-2-tab*5,(a+1)*interv-3),width=2,outline=(256,0,0))
                 return(a)
-                text_print.rectangle((2+tab*5,n*interv,weidth-2-tab*5,a*interv),width=2,outline=(256,0,0))
             elif code[n+1][0]=='@':
                 pointer=0
                 for j in range(1,len(code[n+1])):
                     pointer=pointer*10+int(code[n+1][j])
                 i+=1
-                text_print.rectangle((2+tab*5,n*interv,weidth-2-tab*5,(pointer-1)*interv),width=2,outline=(256,0,0))
+                text_print.rectangle((2+tab*5,n*interv,weidth-2-tab*5,(pointer-1)*interv-3),width=2,outline=(256,0,0))
                 while i!=pointer:
                     if len(edited_code[i])>0:
                         if(edited_code[i][0]=='%'):
@@ -35,11 +36,12 @@ def start_main():
                     i+=1
                 return(pointer)
             else:
-                text_print.rectangle((2+tab*5,n*interv,weidth-2-tab*5,(n+2)*interv),width=2,outline=(256,0,0))
+                text_print.rectangle((2+tab*5,n*interv,weidth-2-tab*5,(n+2)*interv-3),width=2,outline=(256,0,0))
                 text_print.text((10+tab*5,(n+1)*interv),code[n+1],(0,0,0))
                 return(n+1)
         else:
-            text_print.rectangle((2+tab*5,n*interv,weidth-2-tab*5,n*interv),width=2,outline=(256,0,0))
+            text_print.rectangle((2+tab*5,n*interv,weidth-2-tab*5,(n+1)*interv-3),width=2,outline=(256,0,0))
+            return(n)
 #_______________________________________________________-            
       
 #_________________________________________________            
