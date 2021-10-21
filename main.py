@@ -4,7 +4,6 @@ from tkinter import filedialog
 from tkinter import ttk
 from PIL import ImageTk
 
-start = False
 '''
 def scroll(images,i):
     if i==(-1):
@@ -67,7 +66,7 @@ def start_main():
                         tabneed -=1
                 elif cur_str[0]=="%":
                     cur_str_1 = ''
-                    #tabneed+=1
+                    tabneed+=1
                     for j in range(1,len(cur_str)):
                         cur_str_1+=cur_str[j]
                     text_print.text((10+tabneed*5,i),cur_str_1,(0,0,0))
