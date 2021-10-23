@@ -1,7 +1,7 @@
-from PIL import Image,ImageDraw, ImageFont
 import tkinter as tk
 from tkinter import filedialog
 from tkinter import ttk
+from PIL import Image,ImageDraw, ImageFont
 from PIL import ImageTk
 
 font = ImageFont.truetype("arial.ttf", 10, encoding='UTF-8')
