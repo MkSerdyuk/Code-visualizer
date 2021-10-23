@@ -95,10 +95,15 @@ def start_main():
 #__________________________________________
     img = space
     save_button = tk.Button(tab2, text = "Сохранить", width = 25, height = 2, bg ='grey',fg = 'black')
-    save_button.place(relx=.5,rely=0.9,anchor="n")
+    save_button.place(relx=.5,rely=.9,anchor="c")
     save_button.config(command=lambda:save_image(img))
     img_1=ImageTk.PhotoImage(img)
-    code_img = tk.Label(tab2, image = img_1).place(relx=0.5,rely=0.4,anchor='c')
+    canvas = tk.Canvas(tab2,width=weidth,height = 600)
+    canvas.place(relx=0.5,rely=0.4,anchor='c')
+    scroll_y = tk.Scrollbar(tab2,orient="vertical", command=canvas.yview)
+    scroll_y.place(x=(772+weidth/2), rely=0.5, anchor='c')
+    canvas.create_image(0,0,anchor='nw',image=img_1)
+    canvas.configure(scrollregion=canvas.bbox("all"))
     window.mainloop()
 
 def save_image(img):
@@ -117,5 +122,5 @@ tab_control.add(tab2, text = "Результат")
 tab_control.pack(expand=1, fill="both")
 window.title("Визуализатор кода")
 open_button = tk.Button(tab1, text = "Открыть", width =25, height = 2, bg = 'grey',fg = 'black') 
-open_button.place(relx=.5, rely=.5, anchor="s")
+open_button.place(relx=.5, rely=.5, anchor="c")
 open_button.config(command=lambda:start_main())
