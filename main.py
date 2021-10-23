@@ -1,19 +1,24 @@
-from PIL import Image,ImageDraw
+from PIL import Image,ImageDraw, ImageFont
 import tkinter as tk
 from tkinter import filedialog
 from tkinter import ttk
 from PIL import ImageTk
 
+font = ImageFont.truetype("arial.ttf", 10, encoding='UTF-8')
 i=0
 def start_main():
     global i
+    i=0
+    edited_code=[]
+    code=[]
+    pointers=[]
     def module(text_print,interv,weidth,code,n,tab):
         global i
-        text_print.text((10+tab*5,n*interv),code[n][1:],(0,0,0))
-        if code[n][len(code[n])-1]!=';':
+        text_print.text((10+tab*5,n*interv),code[n][1:],(0,0,0),font=font)
+        if (code[n][len(code[n])-1]!=';')or ("procedure" in code[n].lower()) or ("function" in code[n].lower()):
             if code[n+1][0]=='%':
                 a=(module(text_print,interv,weidth,code,n+1,tab+1))
-                print(n*interv,',',a*interv)
+
                 text_print.rectangle((2+tab*5,n*interv,weidth-2-tab*5,(a+1)*interv-3),width=2,outline=(256,0,0))
                 return(a)
             elif code[n+1][0]=='@':
@@ -21,23 +26,23 @@ def start_main():
                 for j in range(1,len(code[n+1])):
                     pointer=pointer*10+int(code[n+1][j])
                 i+=1
-                text_print.rectangle((2+tab*5,n*interv,weidth-2-tab*5,(pointer-1)*interv-3),width=2,outline=(256,0,0))
-                while i!=pointer:
-                    if len(edited_code[i])>0:
-                        if(edited_code[i][0]=='%'):
-                            i=(module(text_print,interv,weidth,edited_code,i,tab+1))
+                text_print.rectangle((2+tab*5,n*interv,weidth-2-tab*5,(pointer+1)*interv-3),width=2,outline=(256,0,0))
+                while i<=pointer:
+                    if len(code[i])>0:
+                        if(code[i][0]=='%'):
+                            i=(module(text_print,interv,weidth,code,i,tab+1))
                         else:
-                            if edited_code[i][0]!='@':
-                                text_print.text((10,i*interv),edited_code[i],(0,0,0))
+                            if code[i][0]!='@':
+                                text_print.text((10,i*interv),code[i],(0,0,0),font=font)
                             elif edited_code[i][1]=="|":
-                                text_print.text((10,i*interv),'END',(0,0,0))
+                                text_print.text((10,i*interv),'END',(0,0,0),font=font)
                             else:
-                                text_print.text((10,i*interv),'BEGIN',(0,0,0))
+                                text_print.text((10,i*interv),'BEGIN',(0,0,0),font=font)
                     i+=1
                 return(pointer)
             else:
                 text_print.rectangle((2+tab*5,n*interv,weidth-2-tab*5,(n+2)*interv-3),width=2,outline=(256,0,0))
-                text_print.text((10+tab*5,(n+1)*interv),code[n+1],(0,0,0))
+                text_print.text((10+tab*5,(n+1)*interv),code[n+1],(0,0,0),font=font)
                 return(n+1)
         else:
             text_print.rectangle((2+tab*5,n*interv,weidth-2-tab*5,(n+1)*interv-3),width=2,outline=(256,0,0))
@@ -57,14 +62,14 @@ def start_main():
             edited_code.append(code[i])
     edited_code.reverse()
     code.reverse()
-    pointers = ['']
-    for i in range(0,len(edited_code)):
-        if ("end" in edited_code[i].lower()):
-            edited_code[i]=("@|")
-            pointers.append(str(len(edited_code)-int(i)+1))
-        elif ("begin" in edited_code[i].lower()):
-            edited_code[i] = ("@"+pointers[len(pointers)-1])
-            del pointers[len(pointers)-1]
+    pointers = []
+    for l in range(0,len(edited_code)):
+        if ("end" in edited_code[l].lower()):
+            edited_code[l]=("@|")
+            pointers.append(str(len(edited_code)-int(l)-1))      
+        elif ("begin" in edited_code[l].lower()):
+            edited_code[l] = ("@"+pointers[len(pointers)-1])
+            del pointers[len(pointers)-1]       
     edited_code.reverse()
     #____________________________
     interv = 15
@@ -78,49 +83,22 @@ def start_main():
     while i+1 <= len(edited_code):
         if len(edited_code[i])>0:
             if(edited_code[i][0]=='%'):
-                i=(module(text_print,interv,weidth,edited_code,i,1))
+                i=(module(text_print,interv,weidth,edited_code,i,0))
             else:
                 if edited_code[i][0]!='@':
-                    text_print.text((10,i*interv),edited_code[i],(0,0,0))
+                    text_print.text((10,i*interv),edited_code[i],(0,0,0),font=font)
                 elif edited_code[i][1]=="|":
-                    text_print.text((10,i*interv),'END',(0,0,0))
+                    text_print.text((10,i*interv),'END',(0,0,0),font=font)
                 else:
-                    text_print.text((10,i*interv),'BEGIN',(0,0,0))
+                    text_print.text((10,i*interv),'BEGIN',(0,0,0),font=font)
         i+=1 
-    '''
-    for i in range(1,height,interv): 
-        if k<len(edited_code):
-            cur_str=str(edited_code[k])
-            if len(cur_str)>0:
-                if cur_str[0]!=("@") and cur_str[0]!=("%"):
-                    text_print.text((10+tabneed*5,i),edited_code[k],(0,0,0))
-                elif cur_str[0]=="@":    
-                    if (cur_str[1]!="|"):
-                        pointer=0
-                        for j in range(len(cur_str)-1):
-                            pointer=pointer*10+int(cur_str[j+1])
-                        text_print.line((2+tabneed*5,i,2+tabneed*5,i+(pointer-k-1)*interv-interv//3),fill='red',width=2)
-                        text_print.text((10+tabneed*5,i),"BEGIN",(0,0,0))
-                        tabneed+=1
-                    elif cur_str[1]=="|":
-                        text_print.text((10+tabneed*5,i),"END",(0,0,0))
-                        tabneed -=1
-                elif cur_str[0]=="%":
-                    cur_str_1 = ''
-                    tabneed+=1
-                    for j in range(1,len(cur_str)):
-                        cur_str_1+=cur_str[j]
-                    text_print.text((10+tabneed*5,i),cur_str_1,(0,0,0))
-                    text_print.line((2+tabneed*5,i,2+tabneed*5,i+2*interv),fill='red',width=2)
-        k+=1
-        '''
 #__________________________________________
     img = space
     save_button = tk.Button(tab2, text = "Сохранить", width = 25, height = 2, bg ='grey',fg = 'black')
     save_button.place(relx=.5,rely=0.9,anchor="n")
     save_button.config(command=lambda:save_image(img))
     img_1=ImageTk.PhotoImage(img)
-    code_img = tk.Label(tab2, image = img_1).place(relx=0.5,rely=0.5,anchor='c')
+    code_img = tk.Label(tab2, image = img_1).place(relx=0.5,rely=0.4,anchor='c')
     window.mainloop()
 
 def save_image(img):
