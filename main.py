@@ -102,7 +102,7 @@ def start_main():
     scroll_y.place(x=(772+weidth/2), rely=0.5, anchor='c')
     canvas.create_image(0,0,anchor='nw',image=img_1)
     canvas.configure(scrollregion=canvas.bbox("all"))
-    winow.mainloop()
+    window.mainloop()
 
 def save_image(img):
     file_name = filedialog.asksaveasfilename(filetypes=[("Image File (PNG)", "*.png"),("Image File (JPEG)", "*.jpeg")],title=("Сохранить как..."))
