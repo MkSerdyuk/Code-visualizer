@@ -1,8 +1,6 @@
+from PIL import Image,ImageDraw, ImageFont, ImageTk
 import tkinter as tk
-from tkinter import filedialog
-from tkinter import ttk
-from PIL import Image,ImageDraw, ImageFont
-from PIL import ImageTk
+from tkinter import ttk, filedialog
 
 font = ImageFont.truetype("arial.ttf", 10, encoding='UTF-8')
 i=0
@@ -104,7 +102,7 @@ def start_main():
     scroll_y.place(x=(772+weidth/2), rely=0.5, anchor='c')
     canvas.create_image(0,0,anchor='nw',image=img_1)
     canvas.configure(scrollregion=canvas.bbox("all"))
-    window.mainloop()
+    winow.mainloop()
 
 def save_image(img):
     file_name = filedialog.asksaveasfilename(filetypes=[("Image File (PNG)", "*.png"),("Image File (JPEG)", "*.jpeg")],title=("Сохранить как..."))
@@ -124,3 +122,6 @@ window.title("Визуализатор кода")
 open_button = tk.Button(tab1, text = "Открыть", width =25, height = 2, bg = 'grey',fg = 'black') 
 open_button.place(relx=.5, rely=.5, anchor="c")
 open_button.config(command=lambda:start_main())
+w = window.winfo_screenwidth()
+h = window.winfo_screenheight()
+window.geometry("{}x{}".format(w,h))
