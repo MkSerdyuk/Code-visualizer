@@ -4,8 +4,9 @@ from tkinter import ttk, filedialog
 
 font = ImageFont.truetype("arial.ttf", 10, encoding='UTF-8')
 i=0
+weidth = 620
 def start_main():
-    global i
+    global i,canvas,img,img_1,weidth,space
     i=0
     edited_code=[]
     code=[]
@@ -17,14 +18,14 @@ def start_main():
             if code[n+1][0]=='%':
                 a=(module(text_print,interv,weidth,code,n+1,tab+1))
 
-                text_print.rectangle((2+tab*5,n*interv,weidth-2-tab*5,(a+1)*interv-3),width=2,outline=(256,0,0))
+                text_print.rectangle((2+tab*5,n*interv,weidth-2-tab*5,(a+1)*interv-3),width=2,outline=(256,0,tab*50))
                 return(a)
             elif code[n+1][0]=='@':
                 pointer=0
                 for j in range(1,len(code[n+1])):
                     pointer=pointer*10+int(code[n+1][j])
                 i+=1
-                text_print.rectangle((2+tab*5,n*interv,weidth-2-tab*5,(pointer+1)*interv-3),width=2,outline=(256,0,0))
+                text_print.rectangle((2+tab*5,n*interv,weidth-2-tab*5,(pointer+1)*interv-3),width=2,outline=(256,0,tab*50))
                 while i<=pointer:
                     if len(code[i])>0:
                         if(code[i][0]=='%'):
@@ -39,11 +40,11 @@ def start_main():
                     i+=1
                 return(pointer)
             else:
-                text_print.rectangle((2+tab*5,n*interv,weidth-2-tab*5,(n+2)*interv-3),width=2,outline=(256,0,0))
+                text_print.rectangle((2+tab*5,n*interv,weidth-2-tab*5,(n+2)*interv-3),width=2,outline=(256,0,tab*50))
                 text_print.text((10+tab*5,(n+1)*interv),code[n+1],(0,0,0),font=font)
                 return(n+1)
         else:
-            text_print.rectangle((2+tab*5,n*interv,weidth-2-tab*5,(n+1)*interv-3),width=2,outline=(256,0,0))
+            text_print.rectangle((2+tab*5,n*interv,weidth-2-tab*5,(n+1)*interv-3),width=2,outline=(256,0,tab*50))
             return(n)
 #_______________________________________________________-            
       
@@ -71,7 +72,6 @@ def start_main():
     edited_code.reverse()
     #____________________________
     interv = 15
-    weidth = 620
     height = interv*len(edited_code)
     space = Image.new("RGB", (weidth,height),(256,256,256))
     text_print = ImageDraw.Draw(space)
@@ -96,20 +96,15 @@ def start_main():
     save_button.place(relx=.5,rely=.9,anchor="c")
     save_button.config(command=lambda:save_image(img))
     img_1=ImageTk.PhotoImage(img)
-    canvas = tk.Canvas(tab2,width=weidth,height = 600)
-    canvas.place(relx=0.5,rely=0.4,anchor='c')
-    scroll_y = tk.Scrollbar(tab2,orient="vertical", command=canvas.yview)
-    scroll_y.place(x=(772+weidth/2), rely=0.5, anchor='c')
     canvas.create_image(0,0,anchor='nw',image=img_1)
-    canvas.configure(scrollregion=canvas.bbox("all"))
-    winow.mainloop()
-
+    window.mainloop()
 def save_image(img):
     file_name = filedialog.asksaveasfilename(filetypes=[("Image File (PNG)", "*.png"),("Image File (JPEG)", "*.jpeg")],title=("Сохранить как..."))
     try:
         img.save(file_name)
     except ValueError:
         img.save(file_name+'.png')
+
 
 window = tk.Tk()
 tab_control = ttk.Notebook(window)
@@ -122,7 +117,23 @@ window.title("Визуализатор кода")
 open_button = tk.Button(tab1, text = "Открыть", width =25, height = 2, bg = 'grey',fg = 'black') 
 open_button.place(relx=.5, rely=.5, anchor="c")
 open_button.config(command=lambda:start_main())
-<<<<<<< HEAD
-w = window.winfo_screenwidth()
-h = window.winfo_screenheight()
-window.geometry("{}x{}".format(w,h))
+canvas = tk.Canvas(tab2,width=weidth,height = 400)
+canvas.place(relx=0.5,rely=0.4,anchor='c')
+canvas.configure(scrollregion=canvas.bbox("all"))
+scroll_y = tk.Scrollbar(tab2,orient="vertical",command=canvas.yview)
+scroll_y.place(relx=0.9, rely=0.3, anchor='c')
+scroll_x = tk.Scrollbar(tab2,orient="horizontal",command=canvas.xview)
+scroll_x.place(relx=0.9, rely=0.2, anchor='c')
+def zoom(a,b,c):
+    global img,img_1
+    if int(b) == -1:
+        img = space.resize((round(img.size[0]*0.9),round(img.size[1]*0.9)))
+    if int(b) == 1:
+        img = space.resize((round(img.size[0]*1.1),round(img.size[1]*1.1)))
+    img_1=ImageTk.PhotoImage(img)
+    canvas.image=''
+    canvas.create_image(0,0,anchor='nw',image=img_1)
+    window.mainloop()
+scroll_zoom = tk.Scrollbar(tab2,orient="horizontal",command=zoom)
+scroll_zoom.place(relx=0.9, rely=0.4, anchor='c')
+window.geometry("{}x{}".format(750,500))
