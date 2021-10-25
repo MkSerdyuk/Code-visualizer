@@ -1,43 +1,36 @@
-type 
-Pinteger=^integer;
+program sortirovka;
+const
+n =10;
 var
-pi,pi2:pinteger;
-i:integer;
-procedure test()
+general:array[1..n] of integer;
+min,max:integer;
+
+procedure swap(a,b:integer);
+var temp:integer;
 begin
-for var i = 31 to 75 do
-	writeln("HELLOWORLD")
+ temp:=general[a];
+ general[a]:=general[b];
+ general[b]:=temp;
 end;
-procedure test2()
+procedure sort();
 begin
-for var i = 11 to 19 do
-	writeln("HELLOWORLD")
+  for var i:=1 to max-1 do
+    if general[i]>general[i+1] then
+      swap(i,i+1);
+  max:=max-1;
+  for var i:= max downto min+1 do 
+    if general[i]<general[i-1] then
+      swap(i,i-1);
+  min:=min+1;
+  if min<max then
+    sort();
 end;
-Begin
 begin
-  if
-  begin
-  
-  end;
-  if
-  begin
-  if;
-  end;
-  if(i<1) then	
-  writeln;
-  pi:=@i;
-  i:=100;
-  writeln;
-  pi^:=33;
-  writeln;
-  new(pi);
-  pi^:=50;
-  writeln;
-  pi2:=pi;
-  dispose(pi);
-  writeln;
-  while true
-	if c = 11 then
-	break
-end;
+  max := n;
+  min:=1;
+  for var i:=1 to n do
+    general[i]:=random(10);
+  writeln(general);
+  sort;
+  writeln(general);
 end.
