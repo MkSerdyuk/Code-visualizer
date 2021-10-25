@@ -118,12 +118,12 @@ open_button = tk.Button(tab1, text = "Открыть", width =25, height = 2, bg
 open_button.place(relx=.5, rely=.5, anchor="c")
 open_button.config(command=lambda:start_main())
 canvas = tk.Canvas(tab2,width=weidth,height = 400)
-canvas.place(relx=0.5,rely=0.4,anchor='c')
+canvas.place(relx=.5,rely=.5,anchor='c')
 canvas.configure(scrollregion=canvas.bbox("all"))
 scroll_y = tk.Scrollbar(tab2,orient="vertical",command=canvas.yview)
-scroll_y.place(relx=0.9, rely=0.3, anchor='c')
+scroll_y.pack(side='right',fill='both')
 scroll_x = tk.Scrollbar(tab2,orient="horizontal",command=canvas.xview)
-scroll_x.place(relx=0.9, rely=0.2, anchor='c')
+scroll_x.pack(side='bottom',fill='x')
 def zoom(a,b,c):
     global img,img_1
     if int(b) == -1:
@@ -134,7 +134,11 @@ def zoom(a,b,c):
     canvas.image=''
     canvas.create_image(0,0,anchor='nw',image=img_1)
     window.mainloop()
-scroll_zoom = tk.Scrollbar(tab2,orient="horizontal",command=zoom)
-scroll_zoom.place(relx=0.9, rely=0.4, anchor='c')
+down_sc=tk.Button(text="-",command=lambda:zoom(0,-1,0))
+up_sc=tk.Button(text="+",command=lambda:zoom(0,1,0))
+lb = tk.Label(text="Масшатаб")
+down_sc.pack(side="left")
+lb.pack(side="left")
+up_sc.pack(side="left")
 window.geometry("{}x{}".format(750,500))
 window.mainloop()
