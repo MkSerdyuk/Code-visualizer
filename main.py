@@ -137,3 +137,4 @@ def zoom(a,b,c):
 scroll_zoom = tk.Scrollbar(tab2,orient="horizontal",command=zoom)
 scroll_zoom.place(relx=0.9, rely=0.4, anchor='c')
 window.geometry("{}x{}".format(750,500))
+window.mainloop()
