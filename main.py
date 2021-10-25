@@ -122,7 +122,6 @@ window.title("Визуализатор кода")
 open_button = tk.Button(tab1, text = "Открыть", width =25, height = 2, bg = 'grey',fg = 'black') 
 open_button.place(relx=.5, rely=.5, anchor="c")
 open_button.config(command=lambda:start_main())
-<<<<<<< HEAD
 w = window.winfo_screenwidth()
 h = window.winfo_screenheight()
 window.geometry("{}x{}".format(w,h))
