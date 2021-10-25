@@ -3,10 +3,27 @@ Pinteger=^integer;
 var
 pi,pi2:pinteger;
 i:integer;
-
-
+procedure test()
+begin
+for var i = 31 to 75 do
+	writeln("HELLOWORLD")
+end;
+procedure test2()
+begin
+for var i = 11 to 19 do
+	writeln("HELLOWORLD")
+end;
 Begin
 begin
+  if
+  begin
+  
+  end;
+  if
+  begin
+  if;
+  end;
+  if(i<1) then	
   writeln;
   pi:=@i;
   i:=100;
@@ -19,5 +36,8 @@ begin
   pi2:=pi;
   dispose(pi);
   writeln;
+  while true
+	if c = 11 then
+	break
 end;
 end.
