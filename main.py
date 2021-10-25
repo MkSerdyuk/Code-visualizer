@@ -120,10 +120,10 @@ open_button.config(command=lambda:start_main())
 canvas = tk.Canvas(tab2,width=weidth,height = 400)
 canvas.place(relx=.5,rely=.5,anchor='c')
 canvas.configure(scrollregion=canvas.bbox("all"))
-scroll_y = tk.Scrollbar(tab2,orient="vertical",command=canvas.yview)
-scroll_y.pack(side='right',fill='both')
-scroll_x = tk.Scrollbar(tab2,orient="horizontal",command=canvas.xview)
-scroll_x.pack(side='bottom',fill='x')
+scroll_y1 = tk.Button(text='UP',command=lambda:(canvas.yview_scroll(1,tk.UNITS)))
+scroll_y2 = tk.Button(text='DOWN',command=lambda:(canvas.yview_scroll(-1,tk.UNITS)))
+scroll_x1 = tk.Button(text='Left',command=lambda:(canvas.xview_scroll(-1,tk.UNITS)))
+scroll_x2 = tk.Button(text='Right',command=lambda:(canvas.xview_scroll(1,tk.UNITS)))
 def zoom(a,b,c):
     global img,img_1
     if int(b) == -1:
@@ -140,5 +140,12 @@ lb = tk.Label(text="Масшатаб")
 down_sc.pack(side="left")
 lb.pack(side="left")
 up_sc.pack(side="left")
+
+scroll_y1.pack(side='left')
+scroll_y2.pack(side='left')
+
+scroll_x1.pack(side='left')
+scroll_x2.pack(side='left')
+
 window.geometry("{}x{}".format(750,500))
 window.mainloop()
