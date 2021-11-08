@@ -97,6 +97,7 @@ def start_main():
     save_button.config(command=lambda:save_image(img))
     img_1=ImageTk.PhotoImage(img)
     canvas.create_image(0,0,anchor='nw',image=img_1)
+    canvas.configure(scrollregion=(0,0,img.size[0],img.size[1]))
     window.mainloop()
 def save_image(img):
     file_name = filedialog.asksaveasfilename(filetypes=[("Image File (PNG)", "*.png"),("Image File (JPEG)", "*.jpeg")],title=("Сохранить как..."))
@@ -117,12 +118,13 @@ window.title("Визуализатор кода")
 open_button = tk.Button(tab1, text = "Открыть", width =25, height = 2, bg = 'grey',fg = 'black') 
 open_button.place(relx=.5, rely=.5, anchor="c")
 open_button.config(command=lambda:start_main())
-canvas = tk.Canvas(tab2,width=weidth,height = 400)
+scroll_y = tk.Scrollbar(tab2,orient="vertical")
+scroll_x = tk.Scrollbar(tab2,orient="horizontal")
+canvas = tk.Canvas(tab2,width=weidth,height = 400,xscrollcommand=scroll_x.set,yscrollcommand=scroll_y.set)
 canvas.place(relx=.5,rely=.5,anchor='c')
-canvas.configure(scrollregion=canvas.bbox("all"))
-scroll_y = tk.Scrollbar(tab2,orient="vertical",command=canvas.yview)
+scroll_y.configure(command=canvas.yview)
 scroll_y.pack(side='right',fill='both')
-scroll_x = tk.Scrollbar(tab2,orient="horizontal",command=canvas.xview)
+scroll_x.configure(command=canvas.xview)
 scroll_x.pack(side='bottom',fill='x')
 def zoom(a,b,c):
     global img,img_1
@@ -130,6 +132,7 @@ def zoom(a,b,c):
         img = space.resize((round(img.size[0]*0.9),round(img.size[1]*0.9)))
     if int(b) == 1:
         img = space.resize((round(img.size[0]*1.1),round(img.size[1]*1.1)))
+    canvas.configure(scrollregion=(0,0,img.size[0],img.size[1]))
     img_1=ImageTk.PhotoImage(img)
     canvas.image=''
     canvas.create_image(0,0,anchor='nw',image=img_1)
