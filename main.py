@@ -144,4 +144,7 @@ down_sc.pack(side="left")
 lb.pack(side="left")
 up_sc.pack(side="left")
 window.geometry("{}x{}".format(750,500))
+def resize(event):
+    canvas.configure(height=window.winfo_height()-100)
+window.bind("<Configure>", resize)
 window.mainloop()
