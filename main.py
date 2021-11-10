@@ -34,9 +34,9 @@ def start_main():
                             if code[i][0]!='@':
                                 text_print.text((10,i*interv),code[i],(0,0,0),font=font)
                             elif edited_code[i][1]=="|":
-                                text_print.text((10,i*interv),'END',(0,0,0),font=font)
+                                text_print.text((10+tab*5,i*interv),'END',(0,0,0),font=font)
                             else:
-                                text_print.text((10,i*interv),'BEGIN',(0,0,0),font=font)
+                                text_print.text((10+tab*5,i*interv),'BEGIN',(0,0,0),font=font)
                     i+=1
                 return(pointer)
             else:
