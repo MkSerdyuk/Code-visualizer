@@ -1,0 +1,35 @@
+program sortirovka;
+const
+n =10;
+var
+general:array[1..n] of integer;
+min,max:integer;
+
+procedure swap(a,b:integer);
+begin
+ temp:=general[a];
+ general[a]:=general[b];
+ general[b]:=temp;
+end;
+procedure sort();
+begin
+  for var i:=1 to max-1 do
+    if general[i]>general[i+1] then
+      swap(i,i+1);
+  max:=max-1;
+  for var i:= max downto min+1 do 
+    if general[i]<general[i-1] then
+      swap(i,i-1);
+  min:=min+1;
+  if min<max then
+    sort();
+end;
+begin
+  max := n;
+  min:=1;
+  for var i:=1 to n do
+    general[i]:=random(10);
+  writeln(general);
+  sort;
+  writeln(general);
+end.
