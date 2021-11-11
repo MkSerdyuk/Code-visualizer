@@ -1,0 +1,50 @@
+﻿program localisation;
+uses system;
+var
+F,Fr,Fl:text;
+r,r2,rt:string;
+a:boolean;
+begin
+  assign(F,'Victoria II\save games\Eoaeey1936_01_01.v2');
+  assign(Fr,'F1.txt');
+  assign(Fl,'localisation file.txt');
+  reset(F);
+  rewrite(Fr);
+  for var i:=1 to 3027977 do
+    readln(F,r);
+  
+  while not(EOF(F)) do
+  begin
+    readln(F,r);
+    for var j:=1 to length(r) do 
+    begin
+        reset(Fl);
+      While not(Eof(Fl)) do
+        begin 
+          readln(Fl,r2);
+        if r2[1]=r[j] then
+        begin
+          if length(r2) = 4 then 
+          begin
+          rt:=rt+r2[3]+r2[4]; 
+          a:=true;
+          end;
+          if length(r2) = 3 then 
+          begin
+          rt:=rt+r2[3]; 
+          a:=true;
+          end;
+          end;
+        end; 
+        if a=false then
+          rt := rt+r[j]
+        else
+          a:=false;
+        close(Fl);
+        end;
+     writeln(Fr,rt);
+  rt:='';
+  end;
+
+  close(Fr);
+end.
