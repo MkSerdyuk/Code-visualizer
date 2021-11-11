@@ -56,7 +56,10 @@ def start_main():
     edited_code = ['']
     for i in range (0, len(code)):
         if (("procedure" in code[i].lower() or "function" in code[i].lower() or "else" in code[i].lower() or "if" in code[i].lower() or "for" in code[i].lower() or "while" in code[i].lower())):
-            edited_code.append("%"+code[i])
+            if (code[i].replace(' ','')[0]!='/'):
+                edited_code.append("%"+code[i])
+            else:
+                edited_code.append(code[i])
         else:
             edited_code.append(code[i])
     edited_code.reverse()
@@ -64,11 +67,13 @@ def start_main():
     pointers = []
     for l in range(0,len(edited_code)):
         if ("end" in edited_code[l].lower()):
-            edited_code[l]=("@|")
-            pointers.append(str(len(edited_code)-int(l)-1))      
+            if (code[i].replace(' ','')[0]!='/'):
+                edited_code[l]=("@|")
+                pointers.append(str(len(edited_code)-int(l)-1))
         elif ("begin" in edited_code[l].lower()):
-            edited_code[l] = ("@"+pointers[len(pointers)-1])
-            del pointers[len(pointers)-1]       
+            if (code[i].replace(' ','')[0]!='/'):
+                edited_code[l] = ("@"+pointers[len(pointers)-1])
+                del pointers[len(pointers)-1]
     edited_code.reverse()
     #____________________________
     interv = 15
