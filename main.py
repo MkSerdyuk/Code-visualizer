@@ -5,6 +5,15 @@ from tkinter import ttk, filedialog
 font = ImageFont.truetype("arial.ttf", 10, encoding='UTF-8')
 i=0
 weidth = 620
+c = open('colors.txt','r')
+colors = c.read().split('\n')
+for i in range(0,len(colors)):
+    colors[i]=colors[i].replace(' ','')
+    colors[i]=colors[i].split(':')
+    del colors[i][1]
+    colors[i]=str(colors[i]).replace('[','')
+    colors[i]=colors[i].replace('\'','')
+    colors[i]=colors[i].replace(']','')
 def start_main():
     global i,canvas,img,img_1,weidth,space
     i=0
@@ -18,14 +27,14 @@ def start_main():
             if code[n+1][0]=='%':
                 a=(module(text_print,interv,weidth,code,n+1,tab+1))
 
-                text_print.rectangle((2+tab*5,n*interv,weidth-2-tab*5,(a+1)*interv-3),width=2,outline=(256,0,tab*50))
+                text_print.rectangle((2+tab*5,n*interv,weidth-2-tab*5,(a+1)*interv-3),width=2,outline=(colors[tab]))
                 return(a)
             elif code[n+1][0]=='@':
                 pointer=0
                 for j in range(1,len(code[n+1])):
                     pointer=pointer*10+int(code[n+1][j])
                 i+=1
-                text_print.rectangle((2+tab*5,n*interv,weidth-2-tab*5,(pointer+1)*interv-3),width=2,outline=(256,0,tab*50))
+                text_print.rectangle((2+tab*5,n*interv,weidth-2-tab*5,(pointer+1)*interv-3),width=2,outline=(colors[tab]))
                 while i<=pointer:
                     if len(code[i])>0:
                         if(code[i][0]=='%'):
@@ -40,11 +49,11 @@ def start_main():
                     i+=1
                 return(pointer)
             else:
-                text_print.rectangle((2+tab*5,n*interv,weidth-2-tab*5,(n+2)*interv-3),width=2,outline=(256,0,tab*50))
+                text_print.rectangle((2+tab*5,n*interv,weidth-2-tab*5,(n+2)*interv-3),width=2,outline=(colors[tab]))
                 text_print.text((10+tab*5,(n+1)*interv),code[n+1],(0,0,0),font=font)
                 return(n+1)
         else:
-            text_print.rectangle((2+tab*5,n*interv,weidth-2-tab*5,(n+1)*interv-3),width=2,outline=(256,0,tab*50))
+            text_print.rectangle((2+tab*5,n*interv,weidth-2-tab*5,(n+1)*interv-3),width=2,outline=(colors[tab]))
             return(n)
 #_______________________________________________________-            
       
