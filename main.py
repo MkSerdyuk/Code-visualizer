@@ -7,7 +7,7 @@ i=0
 weidth = 620
 c = open('colors.txt','r')
 colors = c.read().split('\n')
-for i in range(0,len(colors)):
+for i in range(0,98):
     colors[i]=colors[i].replace(' ','')
     colors[i]=colors[i].split(':')
     del colors[i][1]
